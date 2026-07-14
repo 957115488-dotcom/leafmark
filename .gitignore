@@ -9,7 +9,12 @@ dist/
 build/*
 !build/icon.png
 !build/icon.ico
-docs/
+docs/*
+!docs/images/
+docs/images/*
+!docs/images/leafmark-mark.png
+!docs/images/leafmark-overview.png
+!docs/images/leafmark-inline-editing.png
 scripts/
 tests/
 src/renderer/assets/
