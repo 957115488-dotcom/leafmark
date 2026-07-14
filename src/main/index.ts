@@ -131,6 +131,7 @@ function registerIpc() {
 async function createWindow() {
   const saved = state.window
   mainWindow = new BrowserWindow({
+    icon: path.join(app.getAppPath(), 'build', 'icon.png'),
     width: saved?.width ?? 1260,
     height: saved?.height ?? 790,
     minWidth: 820,

@@ -6,7 +6,9 @@ dist/
 
 # Local-only development and release material. The public repository is
 # intentionally limited to application source, required config, and README.
-build/
+build/*
+!build/icon.png
+!build/icon.ico
 docs/
 scripts/
 tests/
@@ -14,7 +16,6 @@ src/renderer/assets/
 LICENSE
 
 workbench.png
-Leafmark.png
 packaged-smoke.png
 portable-smoke.png
 e2e-reading-edit.png

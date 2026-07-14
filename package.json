@@ -39,15 +39,18 @@
                   "appId":  "com.leafmark.reader",
                   "productName":  "Leafmark",
                   "directories":  {
-                                      "output":  "dist"
+                                      "output":  "dist",
+                                      "buildResources":  "build"
                                   },
                   "files":  [
                                 "out/**/*",
+                                "build/icon.png",
                                 "package.json",
                                 "!node_modules/**/*"
                             ],
                   "asar":  true,
                   "win":  {
+                              "icon":  "build/icon.ico",
                               "target":  [
                                              "nsis"
                                          ],
