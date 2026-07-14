@@ -1,0 +1,61 @@
+name: Build macOS
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: macOS ${{ matrix.arch }}
+    runs-on: macos-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x64, arm64]
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build macOS package
+        run: npm run dist:mac -- --${{ matrix.arch }}
+
+      - name: Smoke-test app bundle
+        shell: bash
+        run: |
+          APP_PATH="$(find dist -type d -name 'Leafmark.app' | head -n 1)"
+          test -n "$APP_PATH"
+          EXECUTABLE="$APP_PATH/Contents/MacOS/Leafmark"
+          file "$EXECUTABLE"
+          "$EXECUTABLE" --user-data-dir="$RUNNER_TEMP/leafmark-smoke-${{ matrix.arch }}" >"$RUNNER_TEMP/leafmark-smoke.log" 2>&1 &
+          APP_PID=$!
+          sleep 8
+          if ! kill -0 "$APP_PID" 2>/dev/null; then
+            cat "$RUNNER_TEMP/leafmark-smoke.log"
+            exit 1
+          fi
+          kill "$APP_PID"
+
+      - name: Upload macOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Leafmark-macOS-${{ matrix.arch }}
+          path: |
+            dist/*.dmg
+            dist/*.zip
+          if-no-files-found: error

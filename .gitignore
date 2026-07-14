@@ -9,6 +9,7 @@ dist/
 build/*
 !build/icon.png
 !build/icon.ico
+!build/icon.icns
 docs/*
 !docs/images/
 docs/images/*

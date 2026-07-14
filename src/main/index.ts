@@ -1,4 +1,4 @@
-﻿import { app, BrowserWindow, dialog, ipcMain, nativeTheme } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, Menu, nativeTheme } from 'electron'
 import { promises as fs, watch, type FSWatcher } from 'node:fs'
 import path from 'node:path'
 import type { AppPreferences, DocumentPayload, PersistedState, SaveResult } from '../shared'
@@ -130,8 +130,9 @@ function registerIpc() {
 
 async function createWindow() {
   const saved = state.window
+  const isMac = process.platform === 'darwin'
   mainWindow = new BrowserWindow({
-    icon: path.join(app.getAppPath(), 'build', 'icon.png'),
+    ...(!isMac && { icon: path.join(app.getAppPath(), 'build', 'icon.png') }),
     width: saved?.width ?? 1260,
     height: saved?.height ?? 790,
     minWidth: 820,
@@ -140,12 +141,13 @@ async function createWindow() {
     y: saved?.y,
     show: false,
     backgroundColor: '#15120e',
-    titleBarStyle: 'hidden',
-    titleBarOverlay: { color: '#00000000', symbolColor: '#b9ae9d', height: 58 },
+    ...(isMac
+      ? { titleBarStyle: 'hiddenInset' as const, trafficLightPosition: { x: 16, y: 20 } }
+      : { titleBarStyle: 'hidden' as const, titleBarOverlay: { color: '#00000000', symbolColor: '#b9ae9d', height: 58 } }),
     webPreferences: { preload: path.join(__dirname, '../preload/index.js'), contextIsolation: true, nodeIntegration: false, sandbox: true },
   })
   if (saved?.maximized) mainWindow.maximize()
-  mainWindow.setMenuBarVisibility(false)
+  if (!isMac) mainWindow.setMenuBarVisibility(false)
   mainWindow.once('ready-to-show', () => mainWindow?.show())
   mainWindow.on('close', () => {
     if (!mainWindow) return
@@ -160,21 +162,49 @@ async function createWindow() {
 
 }
 
+function configureApplicationMenu() {
+  if (process.platform !== 'darwin') return
+  Menu.setApplicationMenu(Menu.buildFromTemplate([
+    { role: 'appMenu' },
+    { role: 'fileMenu' },
+    { role: 'editMenu' },
+    { role: 'viewMenu' },
+    { role: 'windowMenu' },
+  ]))
+}
+
+function handleRequestedFile(filePath: string) {
+  if (!markdownExtensions.has(path.extname(filePath).toLowerCase())) return
+  const resolved = path.resolve(filePath)
+  if (mainWindow && !mainWindow.webContents.isLoading()) void openPath(resolved, true)
+  else {
+    initialPath = resolved
+    if (app.isReady()) void createWindow()
+  }
+}
+
+app.on('open-file', (event, filePath) => {
+  event.preventDefault()
+  handleRequestedFile(filePath)
+})
+
 const gotLock = app.requestSingleInstanceLock()
 if (!gotLock) app.quit()
 else {
   app.on('second-instance', (_event, argv) => {
     const file = candidateFromArgv(argv)
-    if (file) void openPath(path.resolve(file), true)
+    if (file) handleRequestedFile(file)
     mainWindow?.show(); mainWindow?.focus()
   })
   app.whenReady().then(async () => {
     nativeTheme.themeSource = 'dark'
     await loadState()
     const candidate = candidateFromArgv(process.argv.slice(1))
-    initialPath = candidate ? path.resolve(candidate) : null
+    if (candidate) initialPath = path.resolve(candidate)
     registerIpc()
+    configureApplicationMenu()
     await createWindow()
   })
+  app.on('activate', () => { if (!mainWindow) void createWindow() })
   app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit() })
 }

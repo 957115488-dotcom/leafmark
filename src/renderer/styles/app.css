@@ -1,5 +1,5 @@
 
-:root{font-family:"Segoe UI","Microsoft YaHei",sans-serif;color-scheme:dark;font-synthesis:none;text-rendering:optimizeLegibility}
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;color-scheme:dark;font-synthesis:none;text-rendering:optimizeLegibility}
 *{box-sizing:border-box} html,body,#root{width:100%;height:100%;margin:0;overflow:hidden} button,input,textarea{font:inherit} button{color:inherit}
 .app{--bg:#15120e;--top:#1a1712;--sidebar:#17140f;--paper:#15120e;--text:#eee3cf;--muted:#9a8e7c;--faint:#6c6254;--border:#332d24;--accent:#db8d68;--accent-soft:#402a20;--code:#211c16;--shadow:rgba(0,0,0,.28);height:100%;color:var(--text);background:var(--bg);transition:background .25s,color .25s;position:relative}
 .app[data-theme="paper"]{--bg:#d8ccb6;--top:#d3c5ad;--sidebar:#cdbfa7;--paper:#e6dcc9;--text:#352e25;--muted:#776b5a;--faint:#938673;--border:#b7a78e;--accent:#a85235;--accent-soft:#d8b9a5;--code:#d7cbb8;--shadow:rgba(61,45,25,.18);color-scheme:light}
@@ -7,6 +7,8 @@
 
 .titlebar{height:58px;display:grid;grid-template-columns:260px 1fr 400px;align-items:center;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--top) 96%,transparent);position:relative;z-index:50;-webkit-app-region:drag;user-select:none;padding-right:138px}
 .brand-block{display:flex;align-items:center;padding-left:30px;gap:9px}.brand{font:600 12px/1 Georgia,serif;letter-spacing:.28em;background:none;border:0;padding:7px 0;color:var(--muted);cursor:pointer;-webkit-app-region:no-drag}.brand:hover{color:var(--text)}.brand-leaf{font-size:10px;color:var(--accent);transform:rotate(45deg)}
+.app[data-platform="darwin"] .brand-block{padding-left:84px}
+.app[data-platform="darwin"] .titlebar{padding-right:20px}
 .document-title{justify-self:center;min-width:0;text-align:center;display:flex;align-items:center;gap:10px;font-size:14px;letter-spacing:.08em}.document-title span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:370px}.document-title i{font:normal 10px/1 "Segoe UI",sans-serif;letter-spacing:.03em;color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:4px 7px}.document-title i.dirty{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
 .top-actions{justify-self:end;display:flex;align-items:center;gap:3px;-webkit-app-region:no-drag}.icon-button{width:35px;height:35px;display:grid;place-items:center;border:0;border-radius:7px;background:transparent;color:var(--muted);cursor:pointer;transition:.15s}.icon-button svg{width:17px;height:17px;stroke-width:1.6}.icon-button:hover,.icon-button.active{background:color-mix(in srgb,var(--text) 7%,transparent);color:var(--text)}.icon-button.active{color:var(--accent)}.icon-button:disabled{opacity:.35}.toolbar-divider{height:18px;width:1px;background:var(--border);margin:0 5px}
 
