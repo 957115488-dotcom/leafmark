@@ -1,0 +1,75 @@
+{
+    "name":  "leafmark",
+    "version":  "0.1.0",
+    "description":  "A quiet Markdown reader you can edit directly.",
+    "main":  "./out/main/index.js",
+    "author":  "Leafmark Contributors",
+    "license":  "MIT",
+    "private":  true,
+    "scripts":  {
+                    "dev":  "electron-vite dev",
+                    "build":  "electron-vite build",
+                    "preview":  "electron-vite preview",
+                    "typecheck":  "tsc --noEmit -p tsconfig.json",
+                    "dist":  "npm run typecheck \u0026\u0026 npm run build \u0026\u0026 electron-builder --win nsis"
+                },
+    "dependencies":  {
+                         "@tiptap/core":  "latest",
+                         "@tiptap/extension-image":  "latest",
+                         "@tiptap/extension-table":  "latest",
+                         "@tiptap/markdown":  "latest",
+                         "@tiptap/react":  "latest",
+                         "@tiptap/starter-kit":  "latest",
+                         "lucide-react":  "latest",
+                         "react":  "latest",
+                         "react-dom":  "latest"
+                     },
+    "devDependencies":  {
+                            "@types/node":  "latest",
+                            "@types/react":  "latest",
+                            "@types/react-dom":  "latest",
+                            "@vitejs/plugin-react":  "^5.1.4",
+                            "electron":  "^41.7.1",
+                            "electron-builder":  "latest",
+                            "electron-vite":  "latest",
+                            "typescript":  "latest",
+                            "vite":  "^7.3.6"
+                        },
+    "build":  {
+                  "appId":  "com.leafmark.reader",
+                  "productName":  "Leafmark",
+                  "directories":  {
+                                      "output":  "dist"
+                                  },
+                  "files":  [
+                                "out/**/*",
+                                "package.json",
+                                "!node_modules/**/*"
+                            ],
+                  "asar":  true,
+                  "win":  {
+                              "target":  [
+                                             "nsis"
+                                         ],
+                              "artifactName":  "Leafmark-${version}-${arch}.${ext}"
+                          },
+                  "nsis":  {
+                               "oneClick":  false,
+                               "allowToChangeInstallationDirectory":  true,
+                               "createDesktopShortcut":  true,
+                               "createStartMenuShortcut":  true
+                           },
+                  "fileAssociations":  [
+                                           {
+                                               "ext":  [
+                                                           "md",
+                                                           "markdown",
+                                                           "mdown"
+                                                       ],
+                                               "name":  "Markdown document",
+                                               "role":  "Editor"
+                                           }
+                                       ],
+                  "npmRebuild":  false
+              }
+}

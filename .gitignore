@@ -1,0 +1,20 @@
+node_modules/
+out/
+dist/
+*.log
+.DS_Store
+
+# Local-only development and release material. The public repository is
+# intentionally limited to application source, required config, and README.
+build/
+docs/
+scripts/
+tests/
+src/renderer/assets/
+LICENSE
+
+workbench.png
+packaged-smoke.png
+portable-smoke.png
+e2e-reading-edit.png
+e2e-report.json
