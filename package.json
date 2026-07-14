@@ -12,8 +12,8 @@
     "preview": "electron-vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "dist": "npm run dist:win",
-    "dist:win": "npm run typecheck && npm run build && electron-builder --win nsis",
-    "dist:mac": "npm run typecheck && npm run build && electron-builder --mac"
+    "dist:win": "npm run typecheck && npm run build && electron-builder --win nsis --publish never",
+    "dist:mac": "npm run typecheck && npm run build && electron-builder --mac --publish never"
   },
   "dependencies": {
     "@tiptap/core": "latest",
