@@ -2,7 +2,6 @@
 import type { AppPreferences, DocumentPayload, LeafmarkAPI } from '../shared'
 
 const api: LeafmarkAPI = {
-  platform: process.platform,
   getInitialDocument: () => ipcRenderer.invoke('document:initial'),
   openDialog: () => ipcRenderer.invoke('document:open-dialog'),
   openPath: (path) => ipcRenderer.invoke('document:open-path', path),

@@ -30,7 +30,6 @@ export interface PersistedState {
 export type SaveResult = { ok: true; path: string; modifiedAt: number } | { ok: false; canceled?: boolean; message?: string }
 
 export interface LeafmarkAPI {
-  platform: NodeJS.Platform
   getInitialDocument(): Promise<DocumentPayload | null>
   openDialog(): Promise<DocumentPayload | null>
   openPath(path: string): Promise<DocumentPayload>

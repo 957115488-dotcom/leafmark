@@ -13,9 +13,6 @@ import type { DocumentPayload, RecentFile, ThemeName } from '../shared'
 import { decideExternalChange } from './lib/document-state'
 import { extractToc, type TocItem } from './lib/toc'
 
-const isMac = window.leafmark.platform === 'darwin'
-const shortcutPrefix = isMac ? '⌘' : 'Ctrl+'
-
 const welcome = `# 欢迎使用 Leafmark
 
 这是一张可以直接书写的纸。
@@ -30,10 +27,10 @@ const welcome = `# 欢迎使用 Leafmark
 
 ## 常用快捷键
 
-- \`${shortcutPrefix}O\` 打开文件
-- \`${shortcutPrefix}S\` 保存文件
-- \`${shortcutPrefix}F\` 查找内容
-- \`${shortcutPrefix}/\` 切换 Markdown 源码
+- \`Ctrl + O\` 打开文件
+- \`Ctrl + S\` 保存文件
+- \`Ctrl + F\` 查找内容
+- \`Ctrl + /\` 切换 Markdown 源码
 `
 
 const themeOrder: ThemeName[] = ['ink', 'paper', 'light']
@@ -229,7 +226,7 @@ export function App() {
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
-      if (!(event.ctrlKey || event.metaKey)) return
+      if (!event.ctrlKey) return
       if (event.key.toLowerCase() === 's') { event.preventDefault(); void save(event.shiftKey) }
       if (event.key.toLowerCase() === 'o') { event.preventDefault(); void openDialog() }
       if (event.key.toLowerCase() === 'n') { event.preventDefault(); newDocument() }
@@ -263,7 +260,7 @@ export function App() {
     setMarkdown(value); setDirty(value !== lastSaved.current)
   }
 
-  return <div className="app" data-theme={theme} data-platform={window.leafmark.platform} onDragEnter={(e) => { e.preventDefault(); setDragging(true) }} onDragOver={(e) => e.preventDefault()} onDragLeave={(e) => { if (e.currentTarget === e.target) setDragging(false) }} onDrop={handleDrop}>
+  return <div className="app" data-theme={theme} onDragEnter={(e) => { e.preventDefault(); setDragging(true) }} onDragOver={(e) => e.preventDefault()} onDragLeave={(e) => { if (e.currentTarget === e.target) setDragging(false) }} onDrop={handleDrop}>
     <header className="titlebar">
       <div className="brand-block">
         <button className="brand" onClick={() => { void refreshState(); setRecentOpen(true) }} aria-label="最近文件">LEAFMARK</button>
@@ -271,12 +268,12 @@ export function App() {
       </div>
       <div className="document-title"><span>{fileName.replace(/\.md(?:own)?$|\.markdown$/i, '')}</span><i className={dirty ? 'dirty' : ''}>{saving ? '保存中' : dirty ? '未保存' : '已保存'}</i></div>
       <nav className="top-actions">
-        <IconButton title={`新建 ${shortcutPrefix}N`} onClick={newDocument}><FilePlus2 /></IconButton>
-        <IconButton title={`打开 ${shortcutPrefix}O`} onClick={() => void openDialog()}><FolderOpen /></IconButton>
-        <IconButton title={`保存 ${shortcutPrefix}S`} onClick={() => void save()}><Save /></IconButton>
+        <IconButton title="新建 Ctrl+N" onClick={newDocument}><FilePlus2 /></IconButton>
+        <IconButton title="打开 Ctrl+O" onClick={() => void openDialog()}><FolderOpen /></IconButton>
+        <IconButton title="保存 Ctrl+S" onClick={() => void save()}><Save /></IconButton>
         <span className="toolbar-divider" />
-        <IconButton title={`查找 ${shortcutPrefix}F`} active={searchOpen} onClick={() => setSearchOpen(!searchOpen)}><Search /></IconButton>
-        <IconButton title={sourceMode ? '返回阅读编辑' : `Markdown 源码 ${shortcutPrefix}/`} active={sourceMode} onClick={toggleSource}><Code2 /></IconButton>
+        <IconButton title="查找 Ctrl+F" active={searchOpen} onClick={() => setSearchOpen(!searchOpen)}><Search /></IconButton>
+        <IconButton title={sourceMode ? '返回阅读编辑' : 'Markdown 源码 Ctrl+/'} active={sourceMode} onClick={toggleSource}><Code2 /></IconButton>
         <IconButton title={`${themeLabel[theme]}主题`} onClick={cycleTheme}>{theme === 'ink' ? <Moon /> : <Sun />}</IconButton>
         <IconButton title={tocVisible ? '隐藏目录' : '显示目录'} onClick={toggleToc}>{tocVisible ? <PanelLeftClose /> : <PanelLeftOpen />}</IconButton>
       </nav>

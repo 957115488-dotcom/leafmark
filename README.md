@@ -3,16 +3,16 @@
   <h1>Leafmark</h1>
   <p><strong>Edit Markdown where you read it.</strong><br><strong>在阅读界面中直接编辑 Markdown。</strong></p>
   <p>
-    <img src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-2f6feb" alt="Windows and macOS">
+    <img src="https://img.shields.io/badge/platform-Windows-2f6feb" alt="Windows">
     <img src="https://img.shields.io/badge/Electron-41-47848f" alt="Electron 41">
     <img src="https://img.shields.io/badge/React-19-149eca" alt="React 19">
     <img src="https://img.shields.io/badge/version-0.1.0-d9825b" alt="Version 0.1.0">
   </p>
 </div>
 
-Leafmark is an immersive Markdown reader and editor for Windows and macOS. It turns the rendered reading view into the editor itself: open a Markdown file, click the formatted page, and start writing without moving back and forth between an editor and a preview.
+Leafmark is an immersive Markdown reader and editor for Windows. It turns the rendered reading view into the editor itself: open a Markdown file, click the formatted page, and start writing without moving back and forth between an editor and a preview.
 
-Leafmark 是一款面向 Windows 和 macOS 的沉浸式 Markdown 阅读与编辑器。它把渲染后的阅读页面直接变成编辑器：打开 Markdown 文件，单击排版后的正文即可书写，不必在编辑器和预览窗口之间反复切换。
+Leafmark 是一款面向 Windows 的沉浸式 Markdown 阅读与编辑器。它把渲染后的阅读页面直接变成编辑器：打开 Markdown 文件，单击排版后的正文即可书写，不必在编辑器和预览窗口之间反复切换。
 
 ## Preview · 界面预览
 
@@ -49,8 +49,8 @@ Supported content includes headings, paragraphs, bold, italic, blockquotes, orde
    **阅读即编辑**——单击排版后的文档直接输入。
 2. **Selection formatting** — select text to open the floating toolbar.<br>
    **选区格式化**——选中文字后使用浮动工具栏设置格式。
-3. **Markdown source** — press `Ctrl+/` on Windows or `⌘/` on macOS to edit the original source.<br>
-   **Markdown 源码**——在 Windows 按下 `Ctrl+/`，或在 macOS 按下 `⌘/` 编辑原始内容。
+3. **Markdown source** — press `Ctrl+/` to edit the original source.<br>
+   **Markdown 源码**——按下 `Ctrl+/` 编辑原始内容。
 
 ```mermaid
 flowchart LR
@@ -79,8 +79,7 @@ Electron 主进程负责可信文件操作。React 渲染进程启用 `contextIs
 
 ```text
 leafmark/
-├─ build/                    # Windows/macOS application icons · 双平台应用图标
-├─ .github/workflows/        # macOS CI builds · macOS 自动构建
+├─ build/                    # Application icons · 应用图标
 ├─ docs/images/              # README visuals · 说明文档图片
 ├─ src/
 │  ├─ main/                  # Electron main process · Electron 主进程
@@ -97,7 +96,7 @@ leafmark/
 
 ## Requirements · 环境要求
 
-- Windows 10/11 or macOS · Windows 10/11 或 macOS
+- Windows 10 or Windows 11 · Windows 10 或 Windows 11
 - Node.js 20 or later · Node.js 20 或更高版本
 - npm 10 or later · npm 10 或更高版本
 
@@ -129,14 +128,6 @@ Create the Windows installer · 生成 Windows 安装包：
 npm run dist
 ```
 
-Create macOS DMG and ZIP packages on macOS · 在 macOS 上生成 DMG 和 ZIP：
-
-```bash
-npm run dist:mac
-```
-
-The `Build macOS` GitHub Actions workflow builds separate Intel (`x64`) and Apple Silicon (`arm64`) artifacts. GitHub Actions 会分别构建 Intel（`x64`）和 Apple Silicon（`arm64`）版本。
-
 The installer is written to `dist/`. Generated dependencies, build output, and installers are excluded from Git.
 
 安装包输出到 `dist/`。依赖、构建产物和安装程序不会提交到 Git 仓库。
@@ -145,14 +136,14 @@ The installer is written to `dist/`. Generated dependencies, build output, and i
 
 | Shortcut · 快捷键 | Action · 功能 |
 | --- | --- |
-| `Ctrl+N` / `⌘N` | New document · 新建文稿 |
-| `Ctrl+O` / `⌘O` | Open Markdown · 打开 Markdown |
-| `Ctrl+S` / `⌘S` | Save · 保存 |
-| `Ctrl+Shift+S` / `⌘⇧S` | Save as · 另存为 |
-| `Ctrl+F` / `⌘F` | Find · 查找内容 |
-| `Ctrl+/` / `⌘/` | Toggle reading editor and source mode · 切换阅读编辑与源码模式 |
-| `Ctrl+Z` / `⌘Z` | Undo · 撤销 |
-| `Ctrl+Shift+Z` / `⌘⇧Z` | Redo · 重做 |
+| `Ctrl+N` | New document · 新建文稿 |
+| `Ctrl+O` | Open Markdown · 打开 Markdown |
+| `Ctrl+S` | Save · 保存 |
+| `Ctrl+Shift+S` | Save as · 另存为 |
+| `Ctrl+F` | Find · 查找内容 |
+| `Ctrl+/` | Toggle reading editor and source mode · 切换阅读编辑与源码模式 |
+| `Ctrl+Z` | Undo · 撤销 |
+| `Ctrl+Shift+Z` | Redo · 重做 |
 
 ## Files and privacy · 文件与隐私
 
