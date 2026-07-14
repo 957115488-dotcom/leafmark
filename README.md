@@ -66,9 +66,13 @@ leafmark/
 ## 开发运行
 
 ```powershell
-npm install
+git clone https://github.com/957115488-dotcom/leafmark.git
+cd leafmark
+npm ci
 npm run dev
 ```
+
+如果通过 GitHub 的“Download ZIP”下载，解压后在项目目录中执行 `npm ci` 和 `npm run dev` 即可。
 
 ## 类型检查与构建
 
